@@ -73,16 +73,34 @@ describe('queensAttack', () => {
                 1,
             ), 0);
         });
-        it('should work reasonable time with big', () => {
+        it('should correctly handle obstacles from all sides', () => {
+            assert.equal(queensAttack(
+                8,
+                8,
+                4,
+                5,
+                [
+                    [5, 4],
+                    [5, 5],
+                    [5, 6],
+                    [4, 6],
+                    [4, 4],
+                    [3, 4],
+                    [3, 5],
+                    [3, 6],
+                ]
+            ), 0);
+        });
+        it('should work reasonable time with big numbers', () => {
             const obtacles = generateObtacles(100000)
 
             assert.doesNotThrow(() => {
                 console.time('bigN')
                 const actual = queensAttack(
-                    10000,
+                    100000,
                     obtacles.length,
-                    4,
-                    3,
+                    35001,
+                    81075,
                     obtacles
                 )
                 console.timeEnd('bigN')
@@ -92,36 +110,32 @@ describe('queensAttack', () => {
     });
     describe('getPossibleCells', () => {
         it('should return correct cells for direction', () => {
-            const actualUp = getPossibleCells(
+            assert.deepEqual(getPossibleCells(
                 [4, 3],
                 { rowLimit: 8, rowStep: 1, colLimit: 0, colStep: 0 }
-            )
-
-            assert.deepEqual(actualUp, [
+            ), [
                 [5, 3],
                 [6, 3],
                 [7, 3],
                 [8, 3],
             ]);
 
-            const actualDownRight = getPossibleCells(
+            assert.deepEqual(getPossibleCells(
                 [7, 4],
-                { rowLimit: 1, rowStep: -1, colLimit: 8, colStep: 1 }
-            )
-
-            assert.deepEqual(actualDownRight, [
+                { rowLimit: 1, rowStep: -1, colLimit: 10, colStep: 1 }
+            ), [
                 [6, 5],
                 [5, 6],
                 [4, 7],
                 [3, 8],
+                [2, 9],
+                [1, 10],
             ]);
 
-            const actualLeft = getPossibleCells(
+            assert.deepEqual(getPossibleCells(
                 [4, 4],
                 { rowLimit: 0, rowStep: 0, colLimit: 1, colStep: -1 }
-            )
-
-            assert.deepEqual(actualLeft, [
+            ), [
                 [4, 3],
                 [4, 2],
                 [4, 1],

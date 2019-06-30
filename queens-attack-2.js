@@ -64,6 +64,14 @@ function getDirectionObstacles(allObstacles = [], directionCells) {
     })
 }
 
+function cellCanBeAttackedDirectly(cell, queen) {
+    return cell[0] === queen[0] || cell[1] === queen[1]
+}
+
+function cellCanBeAttackedDiagonally(cell, queen) {
+    return Math.abs(cell[0] - queen[0]) === Math.abs(cell[1] - queen[1])
+}
+
 function filterDirectionCells(directionCells, directionObstacles, direction) {
     const filterWith = filterAssertion => {
         return directionCells.filter(cell => {
@@ -98,14 +106,20 @@ function getSimpleOrderedArray(first, count, step) {
 
 // Complete the queensAttack function below.
 function queensAttack(n, k, r_q, c_q, obstacles) {
+    const queen = [r_q, c_q]
 
     const directions = getDirections(1, n)
     
     const cells = []
+
+    const filteredObstacles = (obstacles || []).filter(obstacle => {
+        return cellCanBeAttackedDirectly(obstacle, queen)
+            || cellCanBeAttackedDiagonally(obstacle, queen)
+    })
     
     directions.forEach(direction => {
-        const possibleCells = getPossibleCells([r_q, c_q], direction)
-        const directionObstacles = getDirectionObstacles(obstacles, possibleCells)
+        const possibleCells = getPossibleCells(queen, direction)
+        const directionObstacles = getDirectionObstacles(filteredObstacles, possibleCells)
         const directionCells = filterDirectionCells(possibleCells, directionObstacles, direction)
 
         cells.push(...directionCells)
