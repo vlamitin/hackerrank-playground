@@ -1,0 +1,16 @@
+{
+  "name": "hackerrank-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/assert": "^1.4.2",
+    "assert": "^2.0.0",
+    "mocha": "^6.1.4"
+  }
+}
